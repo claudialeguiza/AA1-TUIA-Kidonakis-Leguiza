@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/18o_QyptAfE2P7AOAwX6vILJajtznJxxw
 """
 
-!pip install streamlit
+# !pip install streamlit
 
 import streamlit as st
 import pandas as pd
@@ -18,7 +18,7 @@ st.title('Pronóstico de lluvia para mañana')
 
 # Cargamos el dataset para obtener el nombre
 # de las columnas
-df = pd.read_csv('df_filtrado.csv', index_col=0)
+df = pd.read_csv('C:\\Users\\solki\\OneDrive\\Documentos\\AA_Final\\AA1-TUIA-Kidonakis-Leguiza\\df_filtrado.csv', index_col=0)
 
 # Cargamos los pipelines
 path_regresion = 'models/regresion_pipeline.joblib'
