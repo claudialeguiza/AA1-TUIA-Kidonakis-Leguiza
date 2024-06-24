@@ -6,25 +6,25 @@ from keras.models import load_model
 
 # Definir las funciones de carga de modelos
 def cargar_modelo_regresion():
-    modelo_regresion = load_model(r'C:\Users\solki\OneDrive\Documentos\AA_FINAL\AA1-TUIA-Kidonakis-Leguiza\regression_model.h5')
+    modelo_regresion = load_model('/content/regression_model.h5')
     return modelo_regresion
 
 def cargar_modelo_clasificacion():
-    modelo_clasif = load_model(r'C:\Users\solki\OneDrive\Documentos\AA_FINAL\AA1-TUIA-Kidonakis-Leguiza\classification_model_optimized.h5')
+    modelo_clasif = load_model('/content/classification_model_optimized.h5')
     return modelo_clasif
 
 # Título de la app
 st.title('Pronóstico de lluvia para mañana')
 
 # Cargar el dataset para obtener el nombre de las columnas
-df = pd.read_csv(r'C:\Users\solki\OneDrive\Documentos\AA_FINAL\AA1-TUIA-Kidonakis-Leguiza\weatherAUS.csv')
+df = pd.read_csv('/content/weatherAUS.csv')
 
 # Seleccionar solo columnas numéricas
 columnas_numericas = df.select_dtypes(include=['number']).columns.tolist()
 
 # Cargar los pipelines desde los archivos joblib
-path_regresion = r'C:\Users\solki\OneDrive\Documentos\AA_FINAL\AA1-TUIA-Kidonakis-Leguiza\regresion_pipeline.joblib'
-path_clasificacion = r'C:\Users\solki\OneDrive\Documentos\AA_FINAL\AA1-TUIA-Kidonakis-Leguiza\\clasificacion_pipeline.joblib'
+path_regresion = '/content/regresion_pipeline.joblib'
+path_clasificacion = '/content/clasificacion_pipeline.joblib'
 
 pipeline_modelo_regresion = joblib.load(path_regresion)
 pipeline_modelo_clasificacion = joblib.load(path_clasificacion)
