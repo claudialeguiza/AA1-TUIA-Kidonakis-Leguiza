@@ -12,4 +12,5 @@ Genera y guarda los modelos con mejores metricas para implementar en las aplicac
 Comandos para abrir las  aplicaciones:
 
 pyhon predict.py
+
 streamlit run app.py
