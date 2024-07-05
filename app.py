@@ -54,7 +54,7 @@ def preparar_prediccion(df):
          df[f'Location_{ciudad}'] = (df['Location']== ciudad).astype(int)
 
     # Crear columnas para WindGustDir, WindDir9am, WindDir3pm
-    wind_directions = ["SW", "S", 'SSW', 'W', 'SSE', 'E', 'SE', 'NE', 'NNE', 'WSW', 'WNW', 'NW', 'N', 'ESE', 'ENE']
+    wind_directions = ["SW", "S", 'SSW', 'W', 'SSE', 'E', 'SE', 'NE', 'WSW', 'WNW', 'NW', 'N', 'ESE', 'ENE']
     for var in wind_directions:
         df[f'WindGustDir_{var}'] = (df['WindGustDir'] == var).astype(int)
         df[f'WindDir9am_{var}'] = (df['WindDir9am'] == var).astype(int)
@@ -70,32 +70,30 @@ def interactuar_con_usuario():
     fecha = date.today()
     wind_directions = ["SW", "S", 'SSW', 'W', 'SSE', 'E', 'SE', 'NE', 'NNE',\
                        'WSW', 'WNW', 'NW', 'N', 'ESE', 'ENE']
-    Location_list= ['Canberra','Cobar', 'Dartmoor','Melbourne','MelbourneAirport',\
+    Location_list= ['Canberra','Cobar','Dartmoor','Melbourne','MelbourneAirport',\
                     'MountGambier','Sydney','SydneyAirport']
-
-    armar_prediccion = {'Date': fecha,
-                        'Location':st.selectbox('Location', Location_list),
-                        'MinTemp': st.slider ("MinTemp", min_value=-10.0, max_value=35.0, step=0.1 ),
-                        'MaxTemp': st.slider("MaxTemp", min_value=3.0, max_value=50.0, step=0.1),
-                        'Rainfall': st.slider("Rainfall", min_value=0.0, max_value= 121.0, step=0.1 ),
-                        'Evaporation': st.slider("Evaporation", min_value=0.0, max_value=50.0, step=0.1),
-                        'Sunshine':st.slider ("Sunshine", min_value=0.0, max_value=15.0, step=0.1),
-                        'WindGustDir': st.selectbox("WindGustDir", wind_directions),
-                        'WindGustSpeed': st.slider("WindGustSpeed", min_value=8.0, max_value=123.0, step=0.1),
-                        'WindDir9am': st.selectbox("WindDir9am", wind_directions),
-                        'WindDir3pm': st.selectbox("WindDir3pm",wind_directions),
-                        'WindSpeed9am': st.slider ("WindSpeed9am", min_value=0.0, max_value=70.0, step=0.1),
-                        'WindSpeed3pm':st.slider("WindSpeed3pm", min_value=0.0, max_value=80.0, step=0.1),
-                        'Humidity9am': st.slider("Humidity9am", min_value=0.0, max_value=100.0, step=0.1),
-                        'Humidity3pm': st.slider("Humidity3pm", min_value=0.0, max_value=100.0, step=0.1),
-                        'Pressure9am': st.slider("Pressure9am", min_value=950.0, max_value=1041.0, step=0.1),
-                        'Pressure3pm': st.slider("Pressure3pm", min_value=950.0, max_value=1041.0, step=0.1),
-                        'Cloud9am': st.slider("Cloud9am", min_value=0.0, max_value=10.0, step=0.1),
-                        'Cloud3pm': st.slider("Cloud3pm", min_value=0.0, max_value=10.0, step=0.1),
-                        'Temp9am': st.slider("Temp9am", min_value=-3.0, max_value=40.0, step=0.1),
-                        'Temp3pm': st.slider("Temp3pm", min_value= 2.0, max_value=50.0, step=0.1),
-                        'RainToday' : st.selectbox("RainToday",['Yes', 'No']),
-                          }
+    cargar_prdiccion = {
+       'Date': fecha,
+       'Location': st.selectbox('Location',['Canberra','Cobar','Dartmoor','Melbourne','MelbourneAirport','MountGambier','Sydney','SydneyAirport']),
+       'MinTemp' : st.slider ("MinTemp", min_value=-10.0, max_value=35.0, value=15.0, step=0.1 ),
+       'MaxTemp': st.slider("MaxTemp", min_value=3.0, max_value=50.0, value= 30.0, step=0.1),
+       'Rainfall': st.slider("Rainfall", min_value=0.0, max_value= 121.0,value=60.0, step=0.1 ),
+       'Evaporation': st.slider("Evaporation", min_value=0.0, max_value=50.0,value=10.0, step=0.1),
+       'Sunshine':st.slider ("Sunshine", min_value=0.0, max_value=15.0, value=6.0, step=0.1),
+       'WindGustDir': st.selectbox("WindGustDir", wind_directions),
+       'WindGustSpeed': st.slider("WindGustSpeed", min_value=8.0, max_value=123.0, value=30.0, step=0.1),
+       'WindDir9am': st.selectbox("WindDir9am", wind_directions, key='WindDir9am'),
+       'WindDir3pm': st.selectbox("WindDir3pm",wind_directions,key='WindDir3pm'),
+       'WindSpeed9am': st.slider ("WindSpeed9am", min_value=0.0, max_value=70.0, value=60.0, step=0.1),
+       'WindSpeed3pm':st.slider("WindSpeed3pm", min_value=0.0, max_value=80.0, value=55.0, step=0.1),
+       'Humidity9am': st.slider("Humidity9am", min_value=0.0, max_value=100.0, value=45.0, step=0.1),
+       'Humidity3pm': st.slider("Humidity3pm", min_value=0.0, max_value=100.0, value=79.0, step=0.1),
+       'Pressure9am': st.slider("Pressure9am", min_value=950.0, max_value=1041.0, value=1020.0, step=0.1),
+       'Cloud9am': st.slider("Cloud9am", min_value=0.0, max_value=10.0, value=6.0, step=0.1),
+       'Cloud3pm': st.slider("Cloud3pm", min_value=0.0, max_value=10.0, value=7.0, step=0.1),
+       'Temp9am': st.slider("Temp9am", min_value=-3.0, max_value=40.0, value=12.0, step=0.1),
+       'Temp3pm': st.slider("Temp3pm", min_value= 2.0, max_value=50.0, value=34.0, step=0.1),
+       'RainToday' : st.selectbox("RainToday",['Yes', 'No'])}
 
     df_prediccion =pd.DataFrame([armar_prediccion])
     return df_prediccion
@@ -103,23 +101,23 @@ def interactuar_con_usuario():
 st.title('Pronostico de lluvia para mañana')
 st.markdown('Espere mientras cargamos la informacion')
 
+df_prediccion = interactuar_con_usuario()
 pipeline_clasificacion, pipeline_regresion = cargar_archivos()
 df_prediccion = interactuar_con_usuario()
+df_prediccion_filtrada = preparar_prediccion(df_prediccion)
+df_prediccion_filtrada['Prediccion_lluvia']= pipeline_clasificacion.predict(df_prediccion_filtrada)[0]
+df_prediccion_filtrada['Prediccion_lluvia']= df_prediccion_filtrada['Prediccion_lluvia'].astype(int)
 
-if df_prediccion is not None:
-    df_prediccion_filtrada = preparar_prediccion(df_prediccion)
-    df_prediccion_filtrada['Prediccion_lluvia']= pipeline_clasificacion.predict(df_prediccion_filtrada)[0]
-    df_prediccion_filtrada['Prediccion_lluvia']= df_prediccion_filtrada['Prediccion_lluvia'].astype(int)
-
-    if df_prediccion_filtrada['Prediccion_lluvia'][0] == 1:
+if df_prediccion_filtrada['Prediccion_lluvia'][0] == 1:
        resultado_clas =  '**sí** 🌧️'
        df_prediccion_filtrada['Prediccion_mm']= pipeline_regresion.predict(df_prediccion_filtrada)[0]
        resultado_reg  = round(float(df_prediccion_filtrada['Prediccion_mm'][0]), 2)
-    else:
-        df_prediccion_filtrada['Prediccion_mm'] = 0.0
-        resultado_clas = '**no** 🌞'
-        resultado_reg = 0
+else:
+      df_prediccion_filtrada['Prediccion_mm'] = 0.0
+      resultado_clas = '**no** 🌞'
+      resultado_reg = 0
 
-
-# Mostramos las predicciones en la app
+  # Mostramos las predicciones en la app
 st.markdown(f'Probablemente mañana {resultado_clas} llueva , precipitaciones: {resultado_reg} mm/h de lluvia.')
+st.write('Gracias por usar nuestro servicio')
+st.stop()
