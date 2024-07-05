@@ -68,7 +68,7 @@ def interactuar_con_usuario():
 
     armar_prediccion = {}
     fecha = date.today()
-    wind_directions = ["SW", "S", 'SSW', 'W', 'SSE', 'E', 'SE', 'NE', 'NNE',\
+    wind_directions = ["SW", "S", 'SSW', 'W', 'SSE', 'E', 'SE', 'NE','NNE',\
                        'WSW', 'WNW', 'NW', 'N', 'ESE', 'ENE']
     Location_list= ['Canberra','Cobar','Dartmoor','Melbourne','MelbourneAirport',\
                     'MountGambier','Sydney','SydneyAirport']
@@ -102,22 +102,24 @@ st.title('Pronostico de lluvia para mañana')
 st.markdown('Espere mientras cargamos la informacion')
 
 df_prediccion = interactuar_con_usuario()
-pipeline_clasificacion, pipeline_regresion = cargar_archivos()
-df_prediccion = interactuar_con_usuario()
-df_prediccion_filtrada = preparar_prediccion(df_prediccion)
-df_prediccion_filtrada['Prediccion_lluvia']= pipeline_clasificacion.predict(df_prediccion_filtrada)[0]
-df_prediccion_filtrada['Prediccion_lluvia']= df_prediccion_filtrada['Prediccion_lluvia'].astype(int)
 
-if df_prediccion_filtrada['Prediccion_lluvia'][0] == 1:
+if st.button('Predecir'):
+  pipeline_clasificacion, pipeline_regresion = cargar_archivos()
+  df_prediccion_filtrada = preparar_prediccion(df_prediccion)
+  df_prediccion_filtrada['Prediccion_lluvia']= pipeline_clasificacion.predict(df_prediccion_filtrada)[0]
+  df_prediccion_filtrada['Prediccion_lluvia']= df_prediccion_filtrada['Prediccion_lluvia'].astype(int)
+
+  if df_prediccion_filtrada['Prediccion_lluvia'][0] == 1:
        resultado_clas =  '**sí** 🌧️'
        df_prediccion_filtrada['Prediccion_mm']= pipeline_regresion.predict(df_prediccion_filtrada)[0]
        resultado_reg  = round(float(df_prediccion_filtrada['Prediccion_mm'][0]), 2)
-else:
+  else:
       df_prediccion_filtrada['Prediccion_mm'] = 0.0
       resultado_clas = '**no** 🌞'
       resultado_reg = 0
 
   # Mostramos las predicciones en la app
-st.markdown(f'Probablemente mañana {resultado_clas} llueva , precipitaciones: {resultado_reg} mm/h de lluvia.')
-st.write('Gracias por usar nuestro servicio')
-st.stop()
+  st.markdown(f'Probablemente mañana {resultado_clas} llueva , precipitaciones: {resultado_reg} mm/h de lluvia.')
+  st.write('Gracias por usar nuestro servicio')
+else:
+   st.stop()
