@@ -65,14 +65,12 @@ def preparar_prediccion(df):
     return df
 
 def interactuar_con_usuario():
-
-    armar_prediccion = {}
+    cargar_prediccion = {}
     fecha = date.today()
     wind_directions = ["SW", "S", 'SSW', 'W', 'SSE', 'E', 'SE', 'NE','NNE',\
                        'WSW', 'WNW', 'NW', 'N', 'ESE', 'ENE']
-    Location_list= ['Canberra','Cobar','Dartmoor','Melbourne','MelbourneAirport',\
-                    'MountGambier','Sydney','SydneyAirport']
-    cargar_prdiccion = {
+
+    cargar_prediccion = {
        'Date': fecha,
        'Location': st.selectbox('Location',['Canberra','Cobar','Dartmoor','Melbourne','MelbourneAirport','MountGambier','Sydney','SydneyAirport']),
        'MinTemp' : st.slider ("MinTemp", min_value=-10.0, max_value=35.0, value=15.0, step=0.1 ),
@@ -89,13 +87,15 @@ def interactuar_con_usuario():
        'Humidity9am': st.slider("Humidity9am", min_value=0.0, max_value=100.0, value=45.0, step=0.1),
        'Humidity3pm': st.slider("Humidity3pm", min_value=0.0, max_value=100.0, value=79.0, step=0.1),
        'Pressure9am': st.slider("Pressure9am", min_value=950.0, max_value=1041.0, value=1020.0, step=0.1),
+       'Pressure3pm': st.slider("Pressure3pm", min_value=950.0, max_value=1041.0, value=1020.0, step=0.1),
        'Cloud9am': st.slider("Cloud9am", min_value=0.0, max_value=10.0, value=6.0, step=0.1),
        'Cloud3pm': st.slider("Cloud3pm", min_value=0.0, max_value=10.0, value=7.0, step=0.1),
        'Temp9am': st.slider("Temp9am", min_value=-3.0, max_value=40.0, value=12.0, step=0.1),
        'Temp3pm': st.slider("Temp3pm", min_value= 2.0, max_value=50.0, value=34.0, step=0.1),
        'RainToday' : st.selectbox("RainToday",['Yes', 'No'])}
 
-    df_prediccion =pd.DataFrame([armar_prediccion])
+    df_prediccion =pd.DataFrame([cargar_prediccion])
+
     return df_prediccion
 
 st.title('Pronostico de lluvia para mañana')
@@ -119,7 +119,7 @@ if st.button('Predecir'):
       resultado_reg = 0
 
   # Mostramos las predicciones en la app
-  st.markdown(f'Probablemente mañana {resultado_clas} llueva , precipitaciones: {resultado_reg} mm/h de lluvia.')
-  st.write('Gracias por usar nuestro servicio')
+      st.markdown(f'Probablemente mañana {resultado_clas} llueva , precipitaciones: {resultado_reg} mm/h de lluvia.')
+      st.write('Gracias por usar nuestro servicio')
 else:
-   st.stop()
+      st.stop()
